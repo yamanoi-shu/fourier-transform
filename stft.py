@@ -17,6 +17,11 @@ def stft(data, window=1024, step=512):
     return z
 
 def main():
-    path = "/home/yamanoi/Downloads/aiueo.wav"
+    path = "/home/yamanoi/fourier-transform/aiueo.wav"
     wav, sr = librosa.load(path, sr=48000)
     ampList = stft(wav)
+    plot.xlim([0, len(data)])
+    plt.imshow(np.abs(spectrogram[:, : fftLen / 2 + 1].T), aspect = "auto", origin = "lower")
+    plt.show()
+
+main()
