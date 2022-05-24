@@ -17,6 +17,16 @@ def stft(data, window=1024, step=512):
     return z
 
 def main():
-    path = "/home/yamanoi/Downloads/aiueo.wav"
+    path = "/Users/yamanoishu/Downloads/aiueo.wav"
     wav, sr = librosa.load(path, sr=48000)
     ampList = stft(wav)
+    plt.xlim([0, len(ampList)])
+    plt.imshow(np.abs(ampList[:, : ampList.shape[0]/2+1].T), aspect = "auto", origin = "lower")
+    plt.show()
+
+main()
+
+
+
+
+
