@@ -1,12 +1,14 @@
 import numpy as np
 from scipy import signal
-import librosa
+from pydub import AudioSegment
 import matplotlib.pyplot as plt
+import os
 
 
 
 def stft(data, window=1024, step=512):
     win_fc = signal.hamming(window)
+    z = []
     for i in range((data.shape[0] - window) // step):
         tmp = data[i*step : i*step + window]
         tmp = tmp * win_fc
@@ -17,11 +19,18 @@ def stft(data, window=1024, step=512):
     return z
 
 def main():
-    path = "/home/yamanoi/fourier-transform/aiueo.wav"
-    wav, sr = librosa.load(path, sr=48000)
-    ampList = stft(wav)
-    plot.xlim([0, len(data)])
-    plt.imshow(np.abs(spectrogram[:, : fftLen / 2 + 1].T), aspect = "auto", origin = "lower")
+    wd = os.getcwd()
+    path = wd + "/aiueo.wav"
+    wav = AudioSegment.from_file(path, format="wav")
+
+    data = np.array(wav.get_array_of_samples())
+
+    ampList = stft(data)
+
+    plt.xlim([0, len(ampList)])
+    plt.imshow(np.abs(ampList[:, : ampList.shape[0]//2+1].T), aspect = "auto", origin = "lower")
     plt.show()
 
 main()
+
+
